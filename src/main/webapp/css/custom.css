@@ -1,0 +1,59 @@
+.div_ul {
+	margin: 0 auto;
+	width: 450px;
+	font: 13px arial;
+}
+
+.div_ul ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.div_ul ul li {
+	padding: 3px 0 3px 50px;
+	border-bottom: dotted 1px #666;
+}
+
+.div_ul ul li label {
+	display: block;
+	width: 100px;
+	float: left;
+	font-size: 14px;
+	background: url(/images/Right.gif) no-repeat 140px center;
+}
+
+.div_ul ul li textarea,.div_ul ul li .setinput {
+	width: 580px;
+	font-size: 13px;
+	font-family: Arial;
+}
+
+.div_ul ul li img.ShowImg {
+	margin-left: 160px;
+}
+
+
+#titlefont{
+	font-size:large;
+	font-weight: bold;
+	
+}
+
+.alldialog{
+	
+	padding: 5px;
+	width:500px !important;
+	height:300px !important;
+}
+.div_inlineBlock{
+	display:inline-block;
+}
+.div_grid{
+	position: absolute;
+	width:100%;
+}
+
+#addReset{
+	display: none;
+}

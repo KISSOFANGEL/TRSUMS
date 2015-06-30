@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>user_addl.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css"/>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css"/>
+	<link rel="stylesheet" type="text/css" href="../easyui/demo/demo.css"/>
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script>
+
+  </head>
+  <script type="text/javascript">
+function validateTel(){
+	
+	  $.extend($.fn.validatebox.defaults.rules, {
+		    Tel: {
+		    validator: function(value, param){
+		    return value.length == 11;
+		    },
+		    message: '请输入11位手机号码！'
+		    }
+		    });
+}
+function validateUsername(){
+  $.extend($.fn.validatebox.defaults.rules, {
+  usernamevalidat:{
+	  validator: function(value, param){
+		   $.post("../user/usernameValidate",{'user.userName':value},function(data){
+               if(data=="unexist"){
+                  flag = true;
+                 
+               }else if(data=="exist"){
+                  flag = false;
+                 mess="用户名已存在";
+               }
+            });
+            return  $.data(document.body,"flag");
+		    },
+		    message: mess
+  }
+  });
+}
+  
+
+  </script>
+  <script type="text/javascript">
+  function submitForm(){
+	  $('#userform').form({
+		  url:"",
+		  onSubmit: function(){
+		 
+		  },
+		  success:function(data){
+		  alert(data)
+		  }
+		  });
+}
+  </script>
+  <body>
+  <form id="userform" method="post">
+  <table>
+		<tr>
+			<td>用户名:</td>
+			<td><input class="easyui-validatebox" name="umsuser.username" data-options="required:true,validType:'usernamevalidat'" onmouseout="validateUsername()"></td>
+		</tr>
+		<tr>
+			<td>密码:</td>
+			<td><input class="easyui-validatebox" name="umsuser.password" data-options="required:true,validType:'length[8,15]'"></td>
+		</tr>
+		<tr>
+			<td>手机:</td>
+			<td><input class="easyui-validatebox" name="umsuser.tel" data-options="required:true,validType:'Tel'"></td>
+		</tr>
+		<tr>
+			<td>邮箱:</td>
+			<td><input class="easyui-validatebox"name="umsuser.tel"data-options="required:true,validType:'email'"></td>
+			</tr>
+		
+		<tr>
+			<td><input type="submit" value="提交">
+			</td>
+		</tr>	
+			</table>
+			
+			</form>
+  </body>
+</html>

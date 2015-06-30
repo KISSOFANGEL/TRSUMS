@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="behaviorpackage" extends="ajax" namespace="/behaviorlogs">
+      <action name="getMyDynamic" class="behaviorLogsAction" method="getMyDynamic">  
+       </action>  
+       <action name="delMyDynamic" class="behaviorLogsAction" method="delMyDynamic">  
+       </action>
+       
+       
+ </package>
+</struts>    

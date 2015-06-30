@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="commentpackage" extends="ajax" namespace="/comment">
+        <!--分页查询当前用户的评论  -->
+        <action name="getCommentByUserId" class="commentAction" method="getCommentByUserId">
+        </action>
+         <!--批量删除分享  -->
+        <action name="delCommentByIds" class="commentAction" method="delCommentByIds">
+        </action>
+        <!--前台保存评论  -->
+        <action name="commentSubmit" class="commentAction" method="commentSubmit">
+        </action>
+        <!--获取文档的评论  -->
+        <action name="getCommentByDocId" class="commentAction" method="getCommentByDocId">
+        </action>
+ </package>
+</struts>    

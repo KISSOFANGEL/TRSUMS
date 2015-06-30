@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<bean id="user" class="com.trsnj.ums.pojo.UMSUser" scope="prototype"></bean>
+	<bean id="channel" class="com.trsnj.ums.pojo.UMSChannel" scope="prototype"></bean>
+	<bean id="behavior" class="com.trsnj.ums.pojo.UMSBehaviorLogs" scope="prototype"></bean>
+	<bean id="collect" class="com.trsnj.ums.pojo.UMSCollect" scope="prototype"></bean>
+	<bean id="comment" class="com.trsnj.ums.pojo.UMSComment" scope="prototype"></bean>
+	<bean id="companyInfo" class="com.trsnj.ums.pojo.UMSCompanyInfo" scope="prototype"></bean>
+	<bean id="group" class="com.trsnj.ums.pojo.UMSGroup" scope="prototype"></bean>
+	<bean id="message" class="com.trsnj.ums.pojo.UMSMessage" scope="prototype"></bean>
+	<bean id="role" class="com.trsnj.ums.pojo.UMSRole" scope="prototype"></bean>
+	<bean id="share" class="com.trsnj.ums.pojo.UMSShare" scope="prototype"></bean>
+	<bean id="subscription" class="com.trsnj.ums.pojo.UMSSubscription" scope="prototype"></bean>
+	<bean id="userGroup" class="com.trsnj.ums.pojo.UMSUserGroup" scope="prototype"></bean>
+	<bean id="userLogs" class="com.trsnj.ums.pojo.UMSUserLogs" scope="prototype"></bean>
+	<bean id="systemMessage" class="com.trsnj.ums.pojo.UMSSystemMessage" scope="prototype"></bean>
+	
+	<bean id="behaviorLogsAction" class="com.trsnj.ums.action.BehaviorLogsAction" parent="baseAction" scope="prototype">
+	   <property name="behaviorService" ref="behaviorServiceImpl"></property>
+		<property name="behaviorlogs" ref="behavior"></property>
+	</bean>
+	<bean id="userAction" class="com.trsnj.ums.action.UserAction" parent="baseAction" scope="prototype">
+		<property name="userService" ref="userServiceImpl"></property>
+		<property name="groupService" ref="groupServiceImpl"></property>
+		<property name="roleService" ref="roleServiceImpl"></property>
+		<property name="companyService" ref="companyInfoServiceImpl"></property>
+		<property name="messageService" ref="messageServiceImpl"></property>
+		<property name="user" ref="user"></property>
+	</bean>
+	<bean id="collectAction" class="com.trsnj.ums.action.CollectAction" parent="baseAction" scope="prototype">
+		<property name="collectService" ref="collectServiceImpl"></property>
+		<property name="userService" ref="userServiceImpl"></property>
+		<property name="collect" ref="collect"></property>
+	</bean>
+	<bean id="commentAction" class="com.trsnj.ums.action.CommentAction" parent="baseAction" scope="prototype">
+		<property name="commentService" ref="commentServiceImpl"></property>
+		<property name="comment" ref="comment"></property>
+	</bean>
+	<bean id="groupAction" class="com.trsnj.ums.action.GroupAction" parent="baseAction" scope="prototype">
+		<property name="groupService" ref="groupServiceImpl"></property>
+		<property name="group" ref="group"></property>
+	</bean>
+	<bean id="loginAction" class="com.trsnj.ums.action.LoginAction" parent="baseAction" scope="prototype">
+		<property name="userService" ref="userServiceImpl"></property>
+		<property name="roleService" ref="roleServiceImpl"></property>
+		<property name="loginService" ref="loginServiceImpl"></property>
+		<property name="user" ref="user"></property>
+	</bean>
+	<bean id="messageAction" class="com.trsnj.ums.action.MessageAction" parent="baseAction" scope="prototype">
+		<property name="userService" ref="userServiceImpl"></property>
+		<property name="roleService" ref="roleServiceImpl"></property>
+		<property name="messageService" ref="messageServiceImpl"></property>
+		<property name="message" ref="message"></property>
+		<property name="systemmessageService" ref="systemMessageServiceImpl"></property>
+	</bean>
+	<bean id="roleAction" class="com.trsnj.ums.action.RoleAction" parent="baseAction" scope="prototype">
+		<property name="roleService" ref="roleServiceImpl"></property>
+		<property name="role" ref="role"></property>
+	</bean>
+	<bean id="shareAction" class="com.trsnj.ums.action.ShareAction" parent="baseAction" scope="prototype">
+		<property name="shareService" ref="shareServiceImpl"></property>
+		<property name="share" ref="share"></property>
+	</bean>
+	<bean id="subscriptionAction" class="com.trsnj.ums.action.SubscriptionAction" parent="baseAction" scope="prototype">
+		<property name="subscriptionService" ref="subscriptionServiceImpl"></property>
+		<property name="subscription" ref="subscription"></property>
+	</bean>
+	<bean id="urlDefaultAction" class="com.trsnj.ums.action.URLDefaultAction" parent="baseAction" scope="prototype">
+	</bean>
+	<bean id="userGroupAction" class="com.trsnj.ums.action.UserGroupAction" parent="baseAction" scope="prototype">
+	</bean>
+	
+	<bean id="systemMessageAction" class="com.trsnj.ums.action.SystemMessageAction" parent="baseAction" scope="prototype">
+	     <property name="systemMessage" ref="systemMessage"></property>
+		<property name="systemmessageService" ref="systemMessageServiceImpl"></property>
+	</bean>
+</beans>

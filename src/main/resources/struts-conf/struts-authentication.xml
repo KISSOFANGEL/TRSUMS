@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="authenticationpackage" extends="ajax" namespace="/authentication">
+        <action name="authenticationmanager" >   
+           <result >/WEB-INF/jsp/project/authentication/authenticationmanager.jsp</result>  
+        </action> 
+        <!--加载数据  -->
+        <action name="getAuthenticationUsers" class="messageAction" method="getAuthenticationUsers">
+        </action>
+        <!--认证详情  -->
+        <action name="getAuthenticationUserInfo" class="userAction" method="getAuthenticationUserInfo">
+        </action>
+        <!--通过认证请求  -->
+        <action name="passAuthenticationUser" class="userAction" method="passAuthenticationUser">
+        </action>
+        <!--批量删除数据  -->
+        <action name="batchDelAuthority" class="messageAction" method="batchDelAuthority">
+        </action>
+        <!--main.jsp的认证信息  -->
+        <action name="getnewAuthoritynum" class="messageAction" method="getnewAuthoritynum">
+        </action>
+ </package>
+</struts>    

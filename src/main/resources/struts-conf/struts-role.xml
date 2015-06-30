@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="rolepackage" extends="ajax" namespace="/role">
+       <!--角色管理页面  -->
+        <action name="rolemanager" >   
+           <result >/WEB-INF/jsp/project/role/rolemanager.jsp</result>  
+        </action>
+        <!--角色用户管理页面  -->
+        <action name="roleusermanager" >   
+           <result >/WEB-INF/jsp/project/role/roleusermanager.jsp</result>  
+        </action>
+        <!--获取user分页的数据 尽量让name与method方法名称一致 -->
+		<action name="getRoles" class="roleAction"
+			method="getRoles">
+			<result name="baseEntityResult" type="json">
+				<!--配置转换json的时候将下面的对象不进行转换 
+				rows.*, 指rows集合对象本身(如： rows.*\.sin )
+                rows\[\d+\] 指rows集合对象中的元素
+                rows\[\d+\]\.umsrole,
+				 -->
+				<param name="excludeProperties">
+					rows\[\d+\]\.users
+				</param>
+			</result>
+		</action>
+		
+		<!--编辑和详细的查询  -->
+		<action name="getRoleByRoleId" class="roleAction"
+			method="getRoleByRoleId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--添加角色  -->
+		<action name="addRole" class="roleAction"
+			method="addRole">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--修改角色  -->
+		<action name="updateRole" class="roleAction"
+			method="updateRole">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--删除角色  -->
+		<action name="delRole" class="roleAction"
+			method="delRole">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--批量删除  -->
+		<action name="batchDelRole" class="roleAction"
+			method="batchDelRole">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!-- roleusermanager页面的请求，加载表格 -->
+		<action name="getUsersByRoleId" class="roleAction"
+			method="getUsersByRoleId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="getUsersNotInNowRoleId" class="roleAction"
+			method="getUsersNotInNowRoleId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--修改用户为当前角色 -->
+		<action name="updateUserToRoleId" class="roleAction"
+			method="updateUserToRoleId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--删除当前角色下的用户delUserInNowRole  -->
+		<action name="delUserInNowRole" class="roleAction"
+			method="delUserInNowRole">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		
+		<!--加权限的请求  -->
+		<action name="getRoleAndChannelByRoleId" class="roleAction"
+			method="getRoleAndChannelByRoleId">
+		</action>
+			<!--修改角色以及栏目权限  -->
+		<action name="updateRoleAndChannel" class="roleAction"
+			method="updateRoleAndChannel">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+			<!--修改角色以及栏目权限  -->
+		<action name="addRoleChannel" class="roleAction"
+			method="addRoleChannel">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--删除角色以及栏目权限  -->
+		<action name="delRoleAndChannel" class="roleAction"
+			method="delRoleAndChannel">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+			<!--批量删除角色以及栏目权限  -->
+		<action name="batchDelRoleAndChannel" class="roleAction"
+			method="batchDelRoleAndChannel">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--个人中心栏目权限展示  -->
+		<action name="getchannelsbyuserid" class="roleAction"
+			method="getchannelsbyuserid">
+		</action>
+	</package>
+</struts>    

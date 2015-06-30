@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>TRS UMS 系统提示信息::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::</TITLE>
+<LINK href="../css/nologin/style.css" rel="stylesheet" type="text/css">
+<SCRIPT src="../js/CWCMDialogHead.js"></SCRIPT>
+<script>
+window.onload = function(){
+	try{
+		if(window != top){
+			top.location.href = "nologin.html";
+		}
+	}catch(error){}
+};
+function doManagerLogin(){
+	if(location.search!=null){
+		window.location.replace("managerlogin.jsp"+location.search);
+	}
+	else{
+		window.location.replace("../../");
+	}
+}
+function doPersonLogin(){
+	if(location.search!=null){
+		window.location.replace("login.jsp"+location.search);
+	}
+	else{
+		window.location.replace("../../");
+	}
+}
+function closeMe(){
+	window.opener = null;
+	var isGecko = navigator.userAgent.toLowerCase().indexOf("gecko") > -1;
+	if(isGecko){
+		window.open('about:blank','_parent','');
+		setTimeout("window.close();", 1); 
+	}else{
+		window.open("","_self");//fix ie7
+		setTimeout("window.close();",1);
+	}
+}
+</script>
+</HEAD>
+
+<BODY>
+    <TABLE width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+    <TR>
+	<TD height="25">
+		<SCRIPT LANGUAGE="JavaScript">
+			WCMDialogHead.draw("系统信息",true);
+		</SCRIPT>
+	</TD>
+    </TR>
+    <TR>
+	<TD align="center" valign="top" class="tanchu_content_td">
+	    <TABLE width="100%" border="0" cellspacing="0" cellpadding="0">
+	    <TR>
+		<TD>
+		    <TABLE width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="a6a6a6">
+		    <TR>
+			<TD height="350" valign="top" bgcolor="#FFFFFF">
+			    <TABLE width="400" border="0" align="center" cellpadding="3" cellspacing="0">
+			    <TR>
+				<TD colspan="2">
+				    <TABLE width="100%" border="0" cellspacing="5" cellpadding="0">
+				    <TR>
+					    <TD width="60"><IMG src="../css/images/error.gif" width="60" height="60"></TD>
+					<TD>
+					<SPAN class="font_redbold style7">
+					系统提示信息:&nbsp;&nbsp;您登录超时或没有登录本系统
+					</SPAN>
+					</TD>
+				    </TR>
+				    </TABLE>
+				</TD>
+			    </TR>
+			    <TR>
+				<TD colspan="2" align="left" valign="top">&nbsp;</TD>
+			    </TR>
+			    <TR>
+				<TD width="100" align="left" valign="top"> 请尝试以下操作：</TD> 
+				<TD width="300" align="left" valign="top">
+				<UL>
+				    <LI><A href="#" onclick="javascript:doPersonLogin();"> 个人登录</A></LI>
+				    <LI><A href="#" onclick="javascript:doManagerLogin();"> 管理员登陆</A></LI>
+				</UL>
+				</TD>
+			    </TR>
+			    <TR>
+				    <TD colspan="2" align="left" valign="top" > </TD>
+			    </TR>
+			    </TABLE>
+			</TD>
+		    </TR>
+		    </TABLE>
+		</TD>
+	    </TR>
+	    <TR>
+		<TD>
+		    <TABLE width="110" border="0" align="center" cellpadding="0" cellspacing="8">
+		    <TR>
+			<TD>
+			<DIV align="center"><INPUT type="button" name="btnClose" onclick="closeMe()" value="关闭窗口"></DIV>
+			</TD>
+		    </TR>
+		    </TABLE>
+		</TD>
+	    </TR>
+	    </TABLE>
+	</TD>
+    </TR>
+    </TABLE>
+</BODY>
+</HTML>

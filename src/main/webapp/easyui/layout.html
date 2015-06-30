@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Border Layout - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="themes/default/easyui.css"/>
+	<link rel="stylesheet" type="text/css" href="themes/icon.css"/>
+	<link rel="stylesheet" type="text/css" href="demo/demo.css"/>
+	
+	<link rel="stylesheet" type="text/css" href="../layer/layer/skin/layer.css"/>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../layer/layer/layer.min.js"></script>
+	<script type="text/javascript">
+	function createGrid(){
+$('#list_data').datagrid({  
+        title:'应用系统列表',  
+        iconCls:'icon-edit',//图标  
+        width: 700,  
+        height: 'auto',  
+        nowrap: false,  
+        striped: true,  
+        border: true,  
+        collapsible:false,//是否可折叠的  
+        fit: true,//自动大小  
+        url:'../user/userAction',  
+        //sortName: 'code',  
+        //sortOrder: 'desc',  
+        remoteSort:false,   
+        idField:'uersid',  
+        singleSelect:false,//是否单选  
+        pagination:true,//分页控件  
+        rownumbers:true,//行号  
+        frozenColumns:[[  
+            {field:'ck',checkbox:true}  
+        ]],  
+        toolbar: [{  
+            text: '添加',  
+            iconCls: 'icon-add',  
+            handler: function() {  
+             openWindow();
+            }  
+        }, '-', {  
+            text: '修改',  
+            iconCls: 'icon-edit',  
+            handler: function() {  
+               openDialog("add_dialog","edit");  
+            }  
+        }, '-',{  
+            text: '删除',  
+            iconCls: 'icon-remove',  
+            handler: function(){  
+                delAppInfo();  
+            }  
+        }],  
+
+    });  
+    //设置分页控件  
+    var p = $('#list_data').datagrid('getPager');  
+    $(p).pagination({  
+        pageSize: 10,//每页显示的记录条数，默认为10  
+        pageList: [5,10,15],//可以设置每页记录条数的列表  
+        beforePageText: '第',//页数文本框前显示的汉字  
+        afterPageText: '页    共 {pages} 页',  
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',  
+        /*onBeforeRefresh:function(){ 
+            $(this).pagination('loading'); 
+            alert('before refresh'); 
+            $(this).pagination('loaded'); 
+        }*/ 
+    });  
+	}
+function createColumnMenu(){
+			var tmenu = $('<div id="tmenu" style="width:100px;"></div>').appendTo('body');
+			var fields = $('#tt').datagrid('getColumnFields');
+			for(var i=0; i<fields.length; i++){
+				$('<div iconCls="icon-ok"></fields>').html(fields[i]).appendTo(tmenu);
+			}
+			tmenu.menu({
+				onClick: function(item){
+					if (item.iconCls=='icon-ok'){
+						$('#tt').datagrid('hideColumn', item.text);
+						tmenu.menu('setIcon', {
+							target: item.target,
+							iconCls: 'icon-empty'
+						});
+					} else {
+						$('#tt').datagrid('showColumn', item.text);
+						tmenu.menu('setIcon', {
+							target: item.target,
+							iconCls: 'icon-ok'
+						});
+					}
+				}
+			});
+		}
+
+
+		function reload(){
+			var node = $('#tt2').tree('getSelected');
+			if (node){
+				$('#tt2').tree('reload', node.target);
+			} else {
+				$('#tt2').tree('reload');
+			}
+		}
+		function getChildren(){
+			var node = $('#tt2').tree('getSelected');
+			if (node){
+				var children = $('#tt2').tree('getChildren', node.target);
+			} else {
+				var children = $('#tt2').tree('getChildren');
+			}
+			var s = '';
+			for(var i=0; i<children.length; i++){
+				s += children[i].text + ',';
+			}
+			alert(s);
+		}
+		function getChecked(){
+			var nodes = $('#tt2').tree('getChecked');
+			var s = '';
+			for(var i=0; i<nodes.length; i++){
+				if (s != '') s += ',';
+				s += nodes[i].text;
+			}
+			alert(s);
+		}
+		function getSelected(){
+			var node = $('#tt2').tree('getSelected');
+			alert(node.text);
+		}
+		function collapse(){
+			var node = $('#tt2').tree('getSelected');
+			$('#tt2').tree('collapse',node.target);
+		}
+		function expand(){
+			var node = $('#tt2').tree('getSelected');
+			$('#tt2').tree('expand',node.target);
+		}
+		function collapseAll(){
+			var node = $('#tt2').tree('getSelected');
+			if (node){
+				$('#tt2').tree('collapseAll', node.target);
+			} else {
+				$('#tt2').tree('collapseAll');
+			}
+		}
+		function expandAll(){
+			var node = $('#tt2').tree('getSelected');
+			if (node){
+				$('#tt2').tree('expandAll', node.target);
+			} else {
+				$('#tt2').tree('expandAll');
+			}
+		}
+		function append(){
+			var node = $('#tt2').tree('getSelected');
+			$('#tt2').tree('append',{
+				parent: (node?node.target:null),
+				data:[{
+					text:'new1',
+					checked:true
+				},{
+					text:'new2',
+					state:'closed',
+					children:[{
+						text:'subnew1'
+					},{
+						text:'subnew2'
+					}]
+				}]
+			});
+		}
+		function remove(){
+			var node = $('#tt2').tree('getSelected');
+			$('#tt2').tree('remove', node.target);
+		}
+		function update(){
+			var node = $('#tt2').tree('getSelected');
+			if (node){
+				node.text = '<span style="font-weight:bold">new text</span>';
+				node.iconCls = 'icon-save';
+				$('#tt2').tree('update', node);
+			}
+		}
+		function isLeaf(){
+			var node = $('#tt2').tree('getSelected');
+			var b = $('#tt2').tree('isLeaf', node.target);
+			alert(b)
+		}
+		
+		function openWindow(){
+			$.layer({
+			    type: 2,
+			    shadeClose: true,
+			    title: false,
+			    closeBtn: [0, false],
+			    shade: [0.8, '#000'],
+			    border: [0],
+			    offset: ['20px',''],
+			   // area: ['200px', ($(window).height() - 50) +'px'],
+			   area: ['400px', '400px'],
+			    iframe: {src: '../html/user_add.html'}
+			}); 
+
+			
+		}
+	</script>
+
+</head>
+<body class="easyui-layout">
+
+	<div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">sregion</div>
+	<div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">
+	<!--west start-->
+	<!-- h2>Tree</h2>
+	<div class="demo-info" style="margin-bottom:10px">
+		<div class="demo-tip icon-tip"></div>
+		<div>Click the node and drag it to other position.</div>
+	</div>
+	
+	
+	<p>Create from JSON data</p>
+	<div style="margin:10px;">
+		<a href="#" onclick="reload()">reload</a>
+		<a href="#" onclick="getChildren()">getChildren</a>
+		<a href="#" onclick="getChecked()">getChecked</a>
+		<a href="#" onclick="getSelected()">getSelected</a>
+		<a href="#" onclick="collapse()">collapse</a>
+		<a href="#" onclick="expand()">expand</a>
+		<a href="#" onclick="collapseAll()">collapseAll</a>
+		<a href="#" onclick="expandAll()">expandAll</a>
+		<a href="#" onclick="append()">append</a>
+		<a href="#" onclick="remove()">remove</a>
+		<a href="#" onclick="update()">update</a>
+		<a href="#" onclick="isLeaf()">isLeaf</a>
+	</div-->
+
+	<ul id="tt2" class="easyui-tree" data-options="url:'demo/tree/tree_data3.json',checkbox:false,
+			onClick: function(node){
+				$(this).tree('toggle', node.target);
+				createGrid();
+			},
+			onContextMenu: function(e,node){
+				e.preventDefault();
+				$(this).tree('select',node.target);
+				$('#mm').menu('show',{
+					left: e.pageX,
+					top: e.pageY
+				});
+			}"
+	></ul>
+	
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div onclick="append()" data-options="iconCls:'icon-add'">Append</div>
+		<div onclick="remove()" data-options="iconCls:'icon-remove'">Remove</div>
+		<div class="menu-sep"></div>
+		<div onclick="expand()">Expand</div>
+		<div onclick="collapse()">Collapse</div>
+	</div>
+	
+	
+	</div>
+	<!--west end-->
+	<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
+	<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
+	<div data-options="region:'center',title:'Main Title'">
+	<table id="list_data" cellspacing="0" cellpadding="0">  
+
+    <thead>  
+
+        <tr>  
+
+            <th field="userid" width="100">部门</th>  
+
+            <th field="username" width="100">用户名</th>  
+
+            <th field="email" width="100">email</th>  
+
+            <th field="qq" width="100">QQ</th>  
+
+            <th field="address" width="100">地址</th>  
+
+
+        </tr>  
+
+    </thead>  
+
+</table> 
+
+
+	</div>
+</body>
+</html>

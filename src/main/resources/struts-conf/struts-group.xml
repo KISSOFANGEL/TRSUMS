@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="grouppackage" extends="ajax" namespace="/group">
+       <!--组织管理页面  -->
+        <action name="groupmanager" >   
+           <result >/WEB-INF/jsp/project/group/groupmanager.jsp</result>  
+        </action>
+        <!--组织用户管理页面  -->
+        <action name="groupusermanager" >   
+           <result >/WEB-INF/jsp/project/group/groupusermanager.jsp</result>  
+        </action>
+        <!--获取user分页的数据 尽量让name与method方法名称一致 -->
+		<action name="getGroups" class="groupAction"
+			method="getGroups">
+			<result name="baseEntityResult" type="json">
+				<!--配置转换json的时候将下面的对象不进行转换 
+				rows.*, 指rows集合对象本身(如： rows.*\.sin )
+                rows\[\d+\] 指rows集合对象中的元素
+                rows\[\d+\]\.umsrole,
+				 -->
+				<param name="excludeProperties">
+					rows\[\d+\]\.usergroups
+				</param>
+			</result>
+		</action>
+		<!--编辑和详细的查询以及parentFormat -->
+		<action name="getGroupByGroupId" class="groupAction"
+			method="getGroupByGroupId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--添加角色  -->
+		<action name="addGroup" class="groupAction"
+			method="addGroup">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--修改角色  -->
+		<action name="updateGroup" class="groupAction"
+			method="updateGroup">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--删除角色  -->
+		<action name="delGroup" class="groupAction"
+			method="delGroup">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--批量删除  -->
+		<action name="batchDelGroup" class="groupAction"
+			method="batchDelGroup">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!-- 组织树形 -->
+		<action name="initgrouptree" class="groupAction"
+			method="initgrouptree">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--groupusermanager配置  -->
+		<!-- 获得当前组织下的用户 -->
+		<action name="getUsersByGroupId" class="groupAction"
+			method="getUsersByGroupId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!-- 获得非当前组织下的用户 -->
+		<action name="getUsersNotInNowGroupId" class="groupAction"
+			method="getUsersNotInNowGroupId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!-- 将用户组添加到当前组织下 -->
+		<action name="updateUserToGroupId" class="groupAction"
+			method="updateUserToGroupId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!-- 将用户组添加到当前组织下 -->
+		<action name="delUserInNowGroupId" class="groupAction"
+			method="delUserInNowGroupId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+	</package>
+</struts>    

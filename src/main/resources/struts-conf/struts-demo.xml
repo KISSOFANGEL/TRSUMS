@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="demopackage" extends="ajax" namespace="/demo">
+        <action name="demo" >   
+           <result >/WEB-INF/jsp/demo/demo.jsp</result>  
+        </action> 
+        <action name="addAction" class="demoAction" method="add">  
+           <result name="success">/WEB-INF/jsp/demo/demo1.jsp</result>
+           <result name="faile">/WEB-INF/jsp/demo/demo.jsp</result>  
+        </action> 
+        <action name="tree" >   
+           <result >/WEB-INF/jsp/demo/testuitree.jsp</result>  
+        </action> 
+        <!--加载模块  -->
+        <action name="loadalldemo" class="com.trsnj.ums.action.DemoAction" method="testLoadalldemo">
+	    	<result type="json" name="baseEntityResult">
+	    	</result>
+        </action>
+ </package>
+</struts>    

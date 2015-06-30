@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<context:annotation-config />
+	<context:component-scan base-package="com.trsnj.ums"/>
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>classpath:jdbc.properties</value>
+		</property>
+	</bean>
+ <!--dbcp连接池  -->
+     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- <property name="initialSize" value="${connection.initialSize}"></property> -->
+        <property name="maxActive" value="${connection.maxActive}"></property>
+	  <property name="maxIdle" value="${connection.maxIdle}"></property>
+	  <property name="minIdle" value="${connection.minIdle}"></property>
+	  <property name="maxWait" value="${connection.maxWait}"></property>
+	  <property name="removeAbandoned" value="${connection.removeAbandoned}"></property>
+	  <property name="removeAbandonedTimeout" value="${connection.removeAbandonedTimeout}"></property>
+	  <property name="logAbandoned" value="${connection.logAbandoned}"></property>
+	        
+    </bean>
+    
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.trsnj.ums.pojo</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>				
+			</props>
+		</property>
+	</bean>
+  	<!--事物管理  -->
+  	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+			<tx:method name="get*,list*,search*,load*,find*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<!--service层事物管理  -->
+	<aop:config>
+		<aop:pointcut id="bussinessService" expression="execution(* com.trsnj.ums.service.impl..*(..))" />
+		<aop:advisor pointcut-ref="bussinessService" advice-ref="txAdvice" />
+	</aop:config>
+	<!--action层日志aop拦截  -->
+	<bean id="umslog" class="com.trsnj.ums.log.UMSSaveLog">
+	   <property name="userLogService" ref="userLogsServiceImpl" />
+	   <property name="behaviorService" ref="behaviorServiceImpl" />
+	</bean> <!--将日志类注入到bean中。--> 
+	<!--service层日志aop拦截  -->
+	<bean id="userRoleGroup" class="com.trsnj.ums.log.UserRoleGroupDelLog">
+	   <property name="userLogService" ref="userLogsServiceImpl" />
+	   <property name="behaviorService" ref="behaviorServiceImpl" />
+	</bean>  
+	 <!-- 配置管理员删除用户,删除组织,删除角色的日志拦截 -->
+       <aop:config>  
+            <aop:aspect id="b" ref="userRoleGroup"> 
+            <aop:pointcut id="log" expression="execution(* com.trsnj.ums.service.impl.*.*(..))"/> 
+            <aop:before pointcut-ref="log" method="before"/>  
+            <aop:after pointcut-ref="log" method="after"/>  
+            </aop:aspect>  
+      </aop:config>
+      <!--service层日志aop拦截  -->
+       <!-- 配置用户登陆,注册,退出登陆的日志拦截 -->
+      <aop:config>  
+            <aop:aspect id="loginaspect" ref="umslog"><!--调用日志类-->  
+            <aop:pointcut id="loginlog" expression="execution(* com.trsnj.ums.action.LoginAction.*(..))"/><!--配置在dao包下所有的类在调用之前都会被拦截-->  
+            <aop:before pointcut-ref="loginlog" method="before"/><!--在log包下面所有的类的所有方法被调用之前都调用MyLog中的before方法-->  
+            <aop:after pointcut-ref="loginlog" method="after"/><!--在log包下面所有的类的所有方法被调用之前都调用MyLog中的after方法-->  
+            </aop:aspect> 
+      </aop:config>
+      <!-- 配置前台用户订阅,收藏,分享,评论的日志拦截 -->
+      <bean id="ucsslog" class="com.trsnj.ums.log.UserColSubShareLog">
+	   <property name="userLogService" ref="userLogsServiceImpl" />
+	   <property name="behaviorService" ref="behaviorServiceImpl" />
+	</bean>  
+      <aop:config>  
+            <aop:aspect id="useractionaspect" ref="ucsslog"><!--调用日志类-->  
+            <aop:pointcut id="useractionlog" expression="execution(* com.trsnj.ums.service.impl.*.*(..))"/><!--配置在dao包下所有的类在调用之前都会被拦截-->  
+            <aop:before pointcut-ref="useractionlog" method="before"/><!--在log包下面所有的类的所有方法被调用之前都调用MyLog中的before方法-->  
+            <aop:after pointcut-ref="useractionlog" method="after"/><!--在log包下面所有的类的所有方法被调用之前都调用MyLog中的after方法-->  
+            </aop:aspect>  
+      </aop:config>
+      <!--要不然加入的aop拦截报错  -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<!-- 基础Dao Service Action -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="baseDao" abstract="true" class="com.trsnj.ums.basedao.imp.BaseDao">
+		<property name="ht" ref="hibernateTemplate" />
+	</bean>
+	<bean id="baseAction" abstract="true" class="com.trsnj.ums.util.BaseAction"> 
+	</bean>
+	
+	
+</beans>

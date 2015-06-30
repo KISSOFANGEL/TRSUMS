@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="smpackage" extends="ajax" namespace="/systemmessage">
+        <action name="areadysystemmessage" >   
+           <result >/WEB-INF/jsp/project/message/areadysystmemessage.jsp</result>  
+        </action>
+        <!--加载模块  -->
+        <action name="getSystemMessages" class="systemMessageAction" method="getSystemMessages">
+	    	<result type="json" name="baseEntityResult">
+	    	</result>
+        </action>
+ </package>
+</struts> 

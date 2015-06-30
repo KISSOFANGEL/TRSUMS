@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+     
+	<package abstract="true" name="ajax" extends="json-default" >
+		<!--如果过滤baseEntity里某一个对象的对象属性不转换成json可以通过@json在get方法上注解实现如UMSUser类，或者通过参数配置来实现  -->
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult">
+				<param name="root">baseEntity</param>
+			</result-type>
+		</result-types>
+		<!--设置拦截器 begin -->
+		<!-- 设置拦截器栈 -->
+		<interceptors>
+			<!-- 增加自定义拦截器 -->
+			<interceptor name="appException"
+				class="com.trsnj.ums.exception.ExceptionInterceptor">
+			</interceptor>
+			<!-- 增加自定义的登陆拦截器 -->
+			 <interceptor name="loginInteceptor" class="com.trsnj.ums.exception.LoginInterceptor"></interceptor> 
+			<interceptor-stack name="ajaxStack">
+				<!--struts2提供的默认拦截器 -->
+				<interceptor-ref name="defaultStack" />
+				<!-- <interceptor-ref name="jsonException" /> -->
+				<interceptor-ref name="appException" />
+				<!--登陆与网页安全拦截器 暂时不加进去 -->
+				 <interceptor-ref name="loginInteceptor">
+				</interceptor-ref>  
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="ajaxStack" /> <!--重新设置系统默认的拦截器 -->
+		<default-action-ref name="index" ></default-action-ref><!--配置默认的action -->
+		<!--设置拦截器 end -->
+		<global-results>
+			<!-- 通用返回类型 --> 
+			<result name="baseEntityResult" type="json"></result>
+			<!--异常拦截器捕获得到的时候转换成json格式传到页面 -->
+			<result name="jsonexception" type="json"></result>
+			<!--登陆界面的异常全局返回类型 还没配置进去 -->
+			 <!-- <result name="loginerror" type="redirect">http://localhost:8000/ums/web/login.jsp</result>
+			 <result name="loginsuccess">WEB-INF/jsp/common/main.jsp</result> -->
+			   <result name="urlerror" type="redirectAction">
+				<param name="namespace">/web</param><!--跳转到其他命名空间的配置  默认没有aciton配置的拦截 拦截直接在url上请求action-->
+				<param name="actionName">login</param>
+			   </result>
+			   <result name="loginerror" type="redirectAction">
+				<param name="namespace">/web</param><!--跳转到其他命名空间的配置  有action配置，但没登陆的拦截 -->
+				<param name="actionName">nologin</param>
+			   </result>
+			   <!--后台登陆成功后跳转的页面  -->
+				 <result name="adminloginsuccess" type="redirectAction">
+				<param name="namespace">/user</param><!--跳转到其他命名空间的配置  -->
+				<param name="actionName">main</param>
+			   </result>
+			    <!--前台登陆成功后的页面  -->
+			    <result name="loginsuccess" type="redirectAction">
+				<param name="namespace">/web</param><!--跳转到其他命名空间的配置  -->
+				<param name="actionName">personal_center</param>
+			   </result>
+		</global-results>
+	   <action name="index" class="urlDefaultAction" method="urldefaultAction">
+       </action>
+       
+	</package>
+	<!--临时解决根目录能跳转不报错的问题  -->
+	<package name="default" extends="ajax" namespace="/">
+	
+	</package>
+	<package name="ums" extends="ajax" namespace="/web">
+	   <action name="login" >   
+           <result >login.jsp</result>  
+       </action>
+       <action name="mlogin" >   
+           <result >managerlogin.jsp</result>  
+       </action>  
+       <action name="personal_center" >   
+           <result >user_center.jsp</result>  
+       </action>
+	  <action name="nologin" >   
+           <result >nologin.html</result>  
+       </action>
+          <!--登陆  -->
+       <action name="logindao" class="loginAction" method="logindao">  
+           <result name="logindaoerror">login.jsp</result>
+        </action>
+        <action name="loginmanagerdao" class="loginAction" method="loginmanagerdao">  
+           <result name="loginmanagerdaoerror">managerlogin.jsp</result>
+        </action>
+        <action name="register" class="loginAction" method="register">  
+        </action>
+        <action name="registerActivate" class="loginAction" method="registerActivate">  
+            <result name="registerActivate">login.jsp</result>
+        </action>
+        <action name="quitSystem" class="loginAction" method="quitSystem">  
+        </action>
+        <action name="findpwd" class="loginAction" method="findpwd">  
+         <result name="success">findpwdmail.jsp</result>
+        </action>
+        <action name="findpwdcheck" class="loginAction" method="findpwdcheck">  
+             <result name="SUCCESS">/WEB-INF/jsp/common/findpwdcheck.jsp</result>
+             <result name="FAIL">login.jsp</result>
+        </action>
+        <action name="updatepwd" class="loginAction" method="updatepwd">  
+             <result name="SUCCESS">login.jsp</result>
+             <result name="FAIL">login.jsp</result>
+        </action>
+      
+	</package>
+	<!-- 装载模块配置文件 -->
+	<include file="struts-conf/struts-demo.xml" />
+	<include file="struts-conf/struts-user.xml" />
+    <include file="struts-conf/struts-role.xml" />
+    <include file="struts-conf/struts-group.xml" />
+    <include file="struts-conf/struts-message.xml" />
+    <include file="struts-conf/struts-comment.xml" />
+    <include file="struts-conf/struts-collect.xml" />
+    <include file="struts-conf/struts-subscription.xml" />
+    <include file="struts-conf/struts-share.xml" />
+    <include file="struts-conf/struts-authentication.xml" />
+    <include file="struts-conf/struts-behaviorlogs.xml" />    
+</struts>    

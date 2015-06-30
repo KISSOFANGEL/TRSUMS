@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="messagepackage" extends="ajax" namespace="/message">
+        <!--分页获取当前用户的message信息  -->
+        <action name="getMessageByUserId" class="messageAction" method="getMessageByUserId">
+        </action>
+        <!--删除当前用户选中的信息  -->
+        <action name="delMessageByUserIds" class="messageAction" method="delMessageByUserIds">
+        </action>
+        <!--删除当前用户选中的求助信息  -->
+        <action name="delHelpMessageByUserIds" class="messageAction" method="delHelpMessageByUserIds">
+        </action>
+        <!--分页获取当前用户的求助信息  -->
+        <action name="getHelpMessageByUserId" class="messageAction" method="getHelpMessageByUserId">
+        </action>
+         <!--分页获取系统的求助信息  -->
+        <action name="getSysHelpMessageByUserId" class="messageAction" method="getSysHelpMessageByUserId">
+        </action>
+        <action name="getSysHelpMessage" class="messageAction" method="getSysHelpMessage">
+        </action>
+         <!--添加用户求助信息  -->
+         <action name="add" class="messageAction" method="add">
+        </action>
+         <action name="sendsystemmessage" >   
+           <result >/WEB-INF/jsp/project/message/sendsystemmessage.jsp</result>  
+        </action>
+        
+         <action name="replyhelpmmessage" >   
+           <result >/WEB-INF/jsp/project/message/replyhelpmmessage.jsp</result>  
+        </action>
+           <!--发送系统信息  -->
+         <action name="addSystemMes" class="messageAction" method="addSystemMes">
+        </action>
+         <!--回复求助信息  -->
+         <action name="replyMes" class="messageAction" method="replyMes">
+        </action>
+        
+        <!--标记信息为已读  -->
+         <action name="readMessage" class="messageAction" method="readMessage">
+        </action>
+        <!--main.jsp求助信息读数  -->
+         <action name="getnewHelpnum" class="messageAction" method="getnewHelpnum">
+        </action>
+        <!--user_center.jsp的系统消息读数  -->
+         <action name="getnewsysmesnum" class="messageAction" method="getnewsysmesnum">
+        </action>
+        <!--user_center.jsp的求助消息新回复读数  -->
+         <action name="getnewreturnhelpnum" class="messageAction" method="getnewreturnhelpnum">
+        </action>
+ </package>
+</struts>    
