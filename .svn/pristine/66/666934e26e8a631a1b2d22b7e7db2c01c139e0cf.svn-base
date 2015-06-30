@@ -1,0 +1,31 @@
+
+.listcomment{overflow-y: scroll;border-top: 1px solid #E0D8D8;}
+.listcomment ul{list-style:none}
+.info{margin-left: 50px;
+line-height: 28px;
+font-size: 14px;}
+.commencon{margin-left: 50px;
+line-height: 28px;
+font-size: 14px;}
+.morecomment{
+  height:28px;
+  line-height: 28px;
+  background-color: #D6CDCD;
+}
+.morecomment a{text-decoration:none}
+
+.umslogin{font-size: 14px;line-height: 28px;width:995px;height:28px;margin:auto;background: #FDF8F8;}
+.collect {float:left;margin-left:20px;}
+.chnlsubscription{float:left;}
+.cut-off{float:left;}
+.logandreg{float:right;margin-right:50px;}
+.loginandregister{float:right;margin-right:50px;line-height: 28px;font-size: 14px;}
+.loginandregister div{height:40px;display:inline}
+
+#modaltrigger{display:none}
+#loginmodal{display:none}
+
+.commentsub span{display:block;margin-left:50px;line-height:28px;font-size:14px;}
+.commentsub h6{margin-top:5px;margin-bottom:0px;margin-right:50px;}
+
+.doccomment{width:700px;border: 1px solid #C0B6B6;margin-bottom: 5px;}

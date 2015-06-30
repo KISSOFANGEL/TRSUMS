@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="userpackage" extends="ajax" namespace="/user">
+	  
+	  
+        <!--用户登录后的主界面  -->
+        <action name="main" >   
+           <result >/WEB-INF/jsp/common/main.jsp</result>  
+        </action> 
+        <action name="alreadyUser" > 
+           <result >/WEB-INF/jsp/project/user/alreadyuser.jsp</result>  
+        </action>
+        <action name="awaitUser" >  
+           <result >/WEB-INF/jsp/project/user/notactivation.jsp</result>  
+        </action>
+        
+		<action name="userAction" class="userAction" method="getAllUsers">
+			<result name="success">/WEB-INF/jsp/demo/demo1.jsp</result>
+			<result name="faile">/WEB-INF/jsp/demo/demo.jsp</result>
+		</action>
+		<!--获取user分页的数据 尽量让name与method方法名称一致 -->
+		<action name="getUsers" class="userAction"
+			method="getUsers">
+			<result name="baseEntityResult" type="json">
+				<!--配置转换json的时候将下面的对象不进行转换 
+				rows.*, 指rows集合对象本身(如： rows.*\.sin )
+                rows\[\d+\] 指rows集合对象中的元素
+                rows\[\d+\]\.umsrole,
+				 -->
+				<param name="excludeProperties">
+					rows\[\d+\]\.umsusergroups
+				</param>
+			</result>
+		</action>
+		<action name="getStrGroupNameByUserId" class="userAction"
+			method="getStrGroupNameByUserId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--编辑和详细的查询  -->
+		<action name="getUserByUserId" class="userAction"
+			method="getUserByUserId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--加载树形  -->
+		<action name="initroletree" class="userAction"
+			method="initroletree">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="initgrouptree" class="userAction"
+			method="initgrouptree">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--编辑和详细的组树形设置值  -->
+		<action name="getStrGroupIdByUserId" class="userAction"
+			method="getStrGroupIdByUserId">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--添加用户  -->
+		<action name="addUser" class="userAction"
+			method="addUser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--修改用户  -->
+		<action name="updateUser" class="userAction"
+			method="updateUser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--删除用户  -->
+		<action name="deluser" class="userAction"
+			method="deluser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--批量删除用户  -->
+		<action name="batchdeluser" class="userAction"
+			method="batchdeluser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--main.jsp中的两个树形加载 -->
+		<action name="initroletreemain" class="userAction"
+			method="initroletreemain">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="initgrouptreemain" class="userAction"
+			method="initgrouptreemain">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--notactivation.jsp  -->
+		<action name="getNotActivationUsers" class="userAction"
+			method="getNotActivationUsers">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="activateUser" class="userAction"
+			method="activateUser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="batchActivateUser" class="userAction"
+			method="batchActivateUser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!--前台中心页面的action请求  -->
+		<action name="getCurrentUser" class="userAction"
+			method="getCurrentUser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="getCurrentCompanyInfo" class="userAction"
+			method="getCurrentCompanyInfo">
+			<result name="baseEntityResult" type="json">
+			<param name="excludeProperties">
+					obj\.user
+			</param>
+			</result>
+		</action>
+		<action name="updateCurrentUser" class="userAction"
+			method="updateCurrentUser">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="updateCurrentCompanyInfo" class="userAction"
+			method="updateCurrentCompanyInfo">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<!-- 个人信息修改 -->
+		<action name="updateCurrentUserAndCompanyInfo" class="userAction"
+			method="updateCurrentUserAndCompanyInfo">
+		</action>
+		<!-- 修改密码 -->
+		<action name="updatePassword" class="userAction"
+			method="updatePassword">
+		</action>
+		<!--注册页面与找回密码页面的几个验证action  -->
+		<action name="getUserByUserName" class="userAction"
+			method="getUserByUserName">
+		</action>
+		<action name="getUserByEmail" class="userAction"
+			method="getUserByEmail">
+		</action>
+		<action name="checkPasswordByUserName" class="userAction"
+			method="checkPasswordByUserName">
+		</action>
+		<action name="checkRegisterEmail" class="userAction"
+			method="checkRegisterEmail">
+		</action>
+		<!--注册用户米密码重置and管理员密码的修改  -->
+		<action name="resetsec" class="userAction"
+			method="resetsec">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+		<action name="updatesec" class="userAction"
+			method="updatesec">
+			<result name="baseEntityResult" type="json">
+			</result>
+		</action>
+	</package>
+</struts>    

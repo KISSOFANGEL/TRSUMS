@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="collectpackage" extends="ajax" namespace="/collect">
+       <!--分页获取搜藏的信息  --> 
+      <action name="getCollectByUserId" class="collectAction" method="getCollectByUserId">
+      </action>
+        <!--批量删除搜藏的信息  --> 
+      <action name="delCollectByIds" class="collectAction" method="delCollectByIds">
+      </action>
+         <!--首页热门推荐  --> 
+      <action name="hotRecommendDoc" class="collectAction" method="hotRecommendDoc">
+      </action>
+        <!-- wcm文章细览页面判断是否登陆 -->
+        <action name="loginfront" class="collectAction" method="loginfront">  
+        </action>
+        <action name="logindaofront" class="collectAction" method="logindaofront">  
+        </action>
+ </package>
+</struts>    

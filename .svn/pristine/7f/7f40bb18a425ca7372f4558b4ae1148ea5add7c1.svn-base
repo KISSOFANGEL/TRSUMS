@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="subscriptionpackage" extends="ajax" namespace="/subscription">
+           <!--分页获取订阅的信息  --> 
+      <action name="getSubscriptionByUserId" class="subscriptionAction" method="getSubscriptionByUserId">
+      </action>
+        <!--批量删除订阅的信息  --> 
+      <action name="delSubscriptionByIds" class="subscriptionAction" method="delSubscriptionByIds">
+      </action>
+        <!--获取订阅简讯  --> 
+      <action name="docInfoInSubscription" class="subscriptionAction" method="docInfoInSubscription">
+      </action>
+         <!--前台订阅栏目  --> 
+      <action name="chnlsub" class="subscriptionAction" method="chnlsub">
+      </action>
+        
+ </package>
+</struts>    

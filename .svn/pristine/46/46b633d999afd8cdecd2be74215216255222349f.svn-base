@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="sharepackage" extends="ajax" namespace="/share">
+         <!--分页查询当前用户的分享  -->
+        <action name="getShareByUserId" class="shareAction" method="getShareByUserId">
+        </action>
+         <!--批量删除分享  -->
+        <action name="delShareByIds" class="shareAction" method="delShareByIds">
+        </action>
+         <!--首页热门分享  -->
+        <action name="hotShareDoc" class="shareAction" method="hotShareDoc">
+        </action>
+         <!--页面分享  -->
+        <action name="shareDoc" class="shareAction" method="shareDoc">
+        </action>
+ </package>
+</struts>    

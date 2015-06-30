@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<bean id="userServiceImpl" class="com.trsnj.ums.service.impl.UserServiceImpl">
+		<property name="userdao" ref="userDaoImpl"></property>
+		<property name="groupdao" ref="groupDaoImpl"></property>
+		<property name="usergroupdao" ref="userGroupDaoImpl"></property>
+		<property name="messagedao" ref="messageDaoImpl"></property>
+	</bean>
+	<bean id="behaviorServiceImpl" class="com.trsnj.ums.service.impl.BehaviorServiceImpl">
+		<property name="behaviordao" ref="behaviorDaoImpl"></property>
+	</bean>
+	
+	<bean id="collectServiceImpl" class="com.trsnj.ums.service.impl.CollectServiceImpl">
+		<property name="collectdao" ref="collectDaoImpl"></property>
+	</bean>
+	
+	<bean id="commentServiceImpl" class="com.trsnj.ums.service.impl.CommentService">
+		<property name="commentdao" ref="commentDaoImpl"></property>
+	</bean>
+	
+	<bean id="companyInfoServiceImpl" class="com.trsnj.ums.service.impl.CompanyInfoServiceImpl">
+		<property name="companydao" ref="companyInfoDaoImpl"></property>
+	</bean>
+	
+	<bean id="groupServiceImpl" class="com.trsnj.ums.service.impl.GroupServiceImpl">
+		<property name="groupdao" ref="groupDaoImpl"></property>
+	</bean>
+	
+	<bean id="loginServiceImpl" class="com.trsnj.ums.service.impl.LoginService">
+		<property name="userdao" ref="userDaoImpl"></property>
+		<property name="groupdao" ref="groupDaoImpl"></property>
+		<property name="usergroupdao" ref="userGroupDaoImpl"></property>
+		<property name="channeldao" ref="channelDaoImpl"></property>
+	</bean>
+	
+	<bean id="messageServiceImpl" class="com.trsnj.ums.service.impl.MessageServiceImpl">
+		<property name="userdao" ref="userDaoImpl"></property>
+		<property name="roledao" ref="roleDaoImpl"></property>
+		<property name="messagedao" ref="messageDaoImpl"></property>
+	</bean>
+	
+	<bean id="roleServiceImpl" class="com.trsnj.ums.service.impl.RoleServiceImpl">
+		<property name="userdao" ref="userDaoImpl"></property>
+		<property name="roledao" ref="roleDaoImpl"></property>
+		<property name="channeldao" ref="channelDaoImpl"></property>
+	</bean>
+	
+	<bean id="shareServiceImpl" class="com.trsnj.ums.service.impl.ShareServiceImpl">
+		<property name="sharedao" ref="shareDaoImpl"></property>
+	</bean>
+	
+	<bean id="subscriptionServiceImpl" class="com.trsnj.ums.service.impl.SubscriptionServiceImpl">
+		<property name="subscriptiondao" ref="subscriptionDaoImpl"></property>
+	</bean>
+	
+	<bean id="userLogsServiceImpl" class="com.trsnj.ums.service.impl.UserLogsServiceImpl">
+		<property name="userlogsdao" ref="logDaoImpl"></property>
+	</bean>
+	
+	<bean id="systemMessageServiceImpl" class="com.trsnj.ums.service.impl.SystemMessageServiceImpl">
+		<property name="systemmessagedao" ref="systemmessageDaoImpl"></property>
+	</bean>
+	
+	
+</beans>
