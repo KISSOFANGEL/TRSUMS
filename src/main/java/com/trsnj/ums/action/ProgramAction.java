@@ -10,7 +10,6 @@ package com.trsnj.ums.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +18,12 @@ import net.sf.json.JSONObject;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.trsnj.ums.pojo.UMSCollect;
+import com.trsnj.ums.pojo.UMSProgram;
 import com.trsnj.ums.pojo.UMSUser;
-import com.trsnj.ums.service.ICollectService;
+import com.trsnj.ums.service.IProgramService;
 import com.trsnj.ums.service.IUserService;
-import com.trsnj.ums.service.impl.CollectServiceImpl;
 import com.trsnj.ums.util.BaseAction;
 import com.trsnj.ums.util.CommonUtil;
-import com.trsnj.ums.util.CommunicateWithWCM;
 import com.trsnj.ums.util.MD5Util;
 
 /**
@@ -36,7 +34,7 @@ import com.trsnj.ums.util.MD5Util;
  * @see  [相关类/方法]
  * @since V1.00
  */
-public class CollectAction extends BaseAction implements ModelDriven<UMSCollect>
+public class ProgramAction extends BaseAction implements ModelDriven<UMSProgram>
 {
     /**
      * serialVersionUID
@@ -44,107 +42,74 @@ public class CollectAction extends BaseAction implements ModelDriven<UMSCollect>
     private static final long serialVersionUID = -7156059444224608648L;
     //private ICollectService collectService=new CollectServiceImpl();
    // private UMSCollect collect=new UMSCollect();
-    private ICollectService collectService=null;
+    private IProgramService programService=null;
     private IUserService userService =null;
-    private UMSCollect collect=null;
+    private UMSProgram program=null;
     
-    /**
-     * 获取 userService
-     * @return 返回 userService
-     */
-    public IUserService getUserService()
-    {
-        return userService;
-    }
-    /**
-     * 设置 userService
-     * @param 对userService进行赋值
-     */
-    public void setUserService(IUserService userService)
-    {
-        this.userService = userService;
-    }
-    /**
-     * 获取 collect
-     * @return 返回 collect
-     */
-    public UMSCollect getCollect()
-    {
-        return collect;
-    }
-    /**
-     * 设置 collect
-     * @param 对collect进行赋值
-     */
-    public void setCollect(UMSCollect collect)
-    {
-        this.collect = collect;
-    }
+    public IProgramService getProgramService() {
+		return programService;
+	}
+	public void setProgramService(IProgramService programService) {
+		this.programService = programService;
+	}
+	public IUserService getUserService() {
+		return userService;
+	}
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
+	public UMSProgram getProgram() {
+		return program;
+	}
+	public void setProgram(UMSProgram program) {
+		this.program = program;
+	}
     /**
      * 重写方法
      * @return
      * @see com.opensymphony.xwork2.ModelDriven#getModel()
      */
     @Override
-    public UMSCollect getModel()
+    public UMSProgram getModel()
     {
-        return collect;
+        return program;
     }
-    /**
-     * 获取 collectService
-     * @return 返回 collectService
-     */
-    public ICollectService getCollectService()
-    {
-        return collectService;
-    }
-    /**
-     * 设置 collectService
-     * @param 对collectService进行赋值
-     */
-    public void setCollectService(ICollectService collectService)
-    {
-        this.collectService = collectService;
-    }
-    /**
-     * 根据用户id分页获取搜藏信息
+	/**
+     * 根据用户id分页获取关注项目信息
      * @see [类、类#方法、类#成员]
      */
-    public void getCollectByUserId(){
+    public void getProgramByUserId(){
         int currpage = Integer.parseInt(request.getParameter("currpage"));
         int perpage = Integer.parseInt(request.getParameter("perpage"));
         long userId=Long.parseLong(this.getUserId());
-        List<UMSCollect> collects=collectService.getCollectsByUserId(userId, (currpage-1)*perpage, perpage);
+        List<UMSProgram> programs =programService.getProgramsByUserId(userId, (currpage-1)*perpage, perpage);
         JSONArray jsonArray = new JSONArray();
-        long total = collectService.getCollectCountByUserId(userId);
+        long total = programService.getProgramCountByUserId(userId);
        // total = total%perpage>0?total/perpage+1:total/perpage;
         String ids="";
         int count=0;
-        for(UMSCollect collect:collects){
-            ids+=collect.getDocid();
-            if(count!=collects.size()-1){
+        for(UMSProgram program:programs){
+            ids+=program.getDocid();
+            if(count!=programs.size()-1){
                 ids+=",";
             }
             count++;
         }
-        System.out.println(ids+"==========collectaction============ids");
-        JSONArray jsondocs=collectService.getWcmDocInfo(ids);
-        System.out.println("================================");
-        System.out.println(jsondocs==null);
-        for(UMSCollect collect:collects){
+        JSONArray jsondocs=programService.getWcmDocInfo(ids);
+        for(UMSProgram program:programs){
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("total",total);
-            jsonObject.accumulate("colstatus", collect.getColstatus());
-            jsonObject.accumulate("collectid", collect.getUMSCollectid());
-            jsonObject.accumulate("coltime", collect.getColtime());
-            jsonObject.accumulate("remark", collect.getRemark());
+            jsonObject.accumulate("prostatus", program.getProgramstatus());
+            jsonObject.accumulate("programid", program.getUMSProgramid());
+            jsonObject.accumulate("remarktime", program.getRemarktime());
+            jsonObject.accumulate("remark", program.getRemark());
             //根据docid来请求wcm的jsp
             boolean flag=false;//判断当前docid是否存在
             //jsondocs !=null????????
             if(jsondocs!=null&&jsondocs.size()>0){
             for(int i=0;i<jsondocs.size();i++){
                 JSONObject jo=jsondocs.getJSONObject(i);
-                if(jo.getString("docid").equals(collect.getDocid()+"")){
+                if(jo.getString("docid").equals(program.getDocid()+"")){
                     jsonObject.accumulate("docid", jo.getString("docid"));
                     jsonObject.accumulate("doctitle", jo.getString("doctitle")); 
                     jsonObject.accumulate("puburl", jo.getString("puburl"));
@@ -155,8 +120,8 @@ public class CollectAction extends BaseAction implements ModelDriven<UMSCollect>
             }
           }   
             if(!flag){
-                jsonObject.accumulate("docid", collect.getDocid());
-                jsonObject.accumulate("doctitle", collect.getDoctitle()); 
+                jsonObject.accumulate("docid", program.getDocid());
+                jsonObject.accumulate("doctitle", program.getDoctitle()); 
                 jsonObject.accumulate("puburl", "#");
                 jsonObject.accumulate("chnlname", "该文档已删除");
             }
@@ -177,10 +142,10 @@ public class CollectAction extends BaseAction implements ModelDriven<UMSCollect>
      * 批量删除
      * @see [类、类#方法、类#成员]
      */
-    public void delCollectByIds(){
+    public void delProgramByIds(){
         String userId=this.getUserId();
         String ids=request.getParameter("ids");
-        collectService.delCollectByIds(Long.parseLong(userId), ids);
+        programService.delProgramByIds(Long.parseLong(userId), ids);
     }
     /**
      * 热门推荐文档，不包括自己收藏的文章
@@ -191,7 +156,7 @@ public class CollectAction extends BaseAction implements ModelDriven<UMSCollect>
        String userId=this.getUserId();
        String firstResult=request.getParameter("firstResult")==null?"0":request.getParameter("firstResult");
        String maxResult=request.getParameter("maxResult")==null?"5":request.getParameter("maxResult");
-       JSONArray jsonArray=collectService.hotRecommendDoc(userId,firstResult,maxResult);
+       JSONArray jsonArray=programService.hotRecommendDoc(userId,firstResult,maxResult);
       response.setCharacterEncoding("UTF-8");
       PrintWriter out;
       try {
@@ -228,7 +193,7 @@ public class CollectAction extends BaseAction implements ModelDriven<UMSCollect>
         JSONObject jsonObject=new JSONObject();
         if(userName!=null){
             //  保存收藏文档
-           String result= collectService.saveCollectFront(doctitle,docid,userId);
+           String result= programService.saveProgramFront(doctitle,docid,userId);
             jsonObject.accumulate("isSuccessOrfail", "SUCCESS");
             jsonObject.accumulate("message", "已登陆");
             jsonObject.accumulate("result", result);
@@ -313,10 +278,14 @@ public class CollectAction extends BaseAction implements ModelDriven<UMSCollect>
             jsonObject.accumulate("sessionid", sessionid);
             jsonObject.accumulate("message", "登陆成功");
             out.print(callbackFunName+"("+jsonObject.toString()+")");
+            System.out.println("jsonobject============"+jsonObject.toString());
+            System.out.println("end============");
             //out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
+	
+	
 }

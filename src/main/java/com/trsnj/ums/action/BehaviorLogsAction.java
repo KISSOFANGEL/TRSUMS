@@ -122,5 +122,28 @@ public class BehaviorLogsAction  extends BaseAction implements ModelDriven<UMSBe
         String ids=request.getParameter("ids");
         behaviorService.delMyDynamic(userId,ids);
     }
-    
+/*    *//**
+     * 
+     * 获取我关注的项目
+     * @return
+     *//*
+    public String getMyprogram(){
+    	 int currpage = Integer.parseInt(request.getParameter("currpage"));
+         int perpage = Integer.parseInt(request.getParameter("perpage"));
+         long userId=Long.parseLong(this.getUserId());
+         List<UMSBehaviorLogs> behaviors=behaviorService.getMyprogram(currpage,perpage,userId);
+         long total=behaviorService.getgetMyprogramCount(userId);
+         JSONArray jsonArray=new JSONArray();
+         for(UMSBehaviorLogs behavior:behaviors)
+         {
+             JSONObject jsonObject=new JSONObject();
+             jsonObject.accumulate("total", total);
+             jsonObject.accumulate("dynamicid", behavior.getUMSBehaviorLogsid());
+             jsonObject.accumulate("action", behavior.getAction());
+             jsonObject.accumulate("objname", behavior.getObjname());
+             jsonObject.accumulate("operatetime", behavior.getOperatetime());
+             jsonArray.add(jsonObject);
+         }
+    	return null;
+    }*/
 }

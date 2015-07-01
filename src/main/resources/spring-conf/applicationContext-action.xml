@@ -23,6 +23,7 @@
 	<bean id="userGroup" class="com.trsnj.ums.pojo.UMSUserGroup" scope="prototype"></bean>
 	<bean id="userLogs" class="com.trsnj.ums.pojo.UMSUserLogs" scope="prototype"></bean>
 	<bean id="systemMessage" class="com.trsnj.ums.pojo.UMSSystemMessage" scope="prototype"></bean>
+	<bean id="program" class="com.trsnj.ums.pojo.UMSProgram" scope="prototype"></bean>
 	
 	<bean id="behaviorLogsAction" class="com.trsnj.ums.action.BehaviorLogsAction" parent="baseAction" scope="prototype">
 	   <property name="behaviorService" ref="behaviorServiceImpl"></property>
@@ -82,5 +83,10 @@
 	<bean id="systemMessageAction" class="com.trsnj.ums.action.SystemMessageAction" parent="baseAction" scope="prototype">
 	     <property name="systemMessage" ref="systemMessage"></property>
 		<property name="systemmessageService" ref="systemMessageServiceImpl"></property>
+	</bean>
+	<bean id="programAction" class="com.trsnj.ums.action.ProgramAction" parent="baseAction" scope="prototype">
+	     <property name="program" ref="program"></property>
+		<property name="programService" ref="programServiceImpl"></property>
+		<property name="userService" ref="userServiceImpl"></property>
 	</bean>
 </beans>

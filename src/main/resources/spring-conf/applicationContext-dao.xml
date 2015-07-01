@@ -39,4 +39,6 @@
 	</bean>
 	<bean id="systemmessageDaoImpl" class="com.trsnj.ums.dao.impl.UMSSystemMessageDaoImpl" parent="baseDao">
 	</bean>
+	<bean id="programDaoImpl" class="com.trsnj.ums.dao.impl.UMSProgramDaoImpl" parent="baseDao">
+	</bean>
 </beans>

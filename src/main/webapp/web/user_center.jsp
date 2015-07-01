@@ -38,7 +38,7 @@
 <![endif]-->
   <header class="am-topbar admin-header">
   <div class="am-topbar-brand">
-    <strong>江苏省标准化研究院</strong> <small>用户个人中心</small>
+    <strong>江苏省产权交易所</strong> <small>用户个人中心</small>
   </div>
 
   <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
@@ -66,7 +66,7 @@
   <!-- sidebar start -->
   <div class="admin-sidebar">
     <ul class="am-list admin-sidebar-list">
-      <li><a href="javascript:addTable('personal_default.jsp');"><span class="am-icon-home"></span> 首页</a></li>
+      <li><a href="javascript:addTable('cjs_personal_default.jsp');"><span class="am-icon-home"></span> 首页</a></li>
       <li class="admin-parent">
         <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-file"></span> 查看/修改我的信息 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav">
@@ -77,8 +77,8 @@
           <li><a href="admin-404.html"><span class="am-icon-bug"></span> 404</a></li-->
         </ul>
       </li>
-      <li><a href="javascript:addTable('mydynamic.jsp');"><span class="am-icon-paw"></span> 我的动态</a></li>
-      <li><a href="javascript:addTable('myComment.jsp');"><span class="am-icon-pencil-square-o"></span> 我的评论</a></li>
+      <li><a href="javascript:addTable('cjs_myprogram.jsp');"><span class="am-icon-paw"></span> 我的项目</a></li>
+     <!-- <li><a href="javascript:addTable('myComment.jsp');"><span class="am-icon-pencil-square-o"></span> 我的评论</a></li>
       <li><a href="javascript:addTable('myShare.jsp');"><span class="am-icon-puzzle-piece"></span> 我的分享</a></li>
       <li><a class="am-cf" data-am-collapse="{target: '#message-nav'}"><span class="am-icon-envelope-square"></span> 我的消息 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
       	<ul class="am-list am-collapse admin-sidebar-sub am-in" id="message-nav">
@@ -87,7 +87,7 @@
           </ul>
       </li>
       <li><a href="javascript:addTable('myCollect.jsp');"><span class="am-icon-tags"></span> 我的收藏</a></li>
-      <li><a href="javascript:addTable('mySubscription.jsp');"><span class="am-icon-rss"></span> 我的订阅</a></li>
+      <li><a href="javascript:addTable('mySubscription.jsp');"><span class="am-icon-rss"></span> 我的订阅</a></li> --> 
       <li><a href="<%=root%>/web/quitSystem"><span class="am-icon-sign-out"></span> 注销</a></li>
     </ul>
 
@@ -109,7 +109,7 @@
    </div>
   <footer>
   <hr>
-  <p class="am-padding-left" align="center">© 2014 TRS, 江苏省标准化研究院</p>
+  <p class="am-padding-left" align="center">© 2014 TRS, 江苏省产权交易所</p>
 </footer>
   <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
@@ -133,7 +133,7 @@ function addTable(page){
 		});
 }
 $(function(){
-	addTable("personal_default.jsp");
+	addTable("cjs_personal_default.jsp");
 	
 		}); 
 	var userName='<%=userName%>';

@@ -44,10 +44,6 @@ public class LoginAction extends BaseAction implements ModelDriven<UMSUser>
      * serialVersionUID
      */
     private static final long serialVersionUID = 4104497756414084778L;
-    //private IUserService userService =new UserServiceImpl();
-    //private IRoleService roleService =new RoleServiceImpl();
-    //private ILoginService loginService =new LoginService();
-    //private UMSUser user=new UMSUser();
     private IUserService userService =null;
     private IRoleService roleService =null;
     private ILoginService loginService =null;
@@ -257,7 +253,7 @@ public class LoginAction extends BaseAction implements ModelDriven<UMSUser>
     public String loginmanagerdao(){
         // 根据用户名查询查用户
        UMSUser u=userService.getUserByName(user.getUserName());
-   /*     if(u==null){
+     if(u==null){
             //用户名不存在
             request.setAttribute("info", "用户不存在");
             request.setAttribute("status", "n");
@@ -277,7 +273,7 @@ public class LoginAction extends BaseAction implements ModelDriven<UMSUser>
                     return "loginmanagerdaoerror";  //登陆错误后，转跳转的
                 }
             }
-        }*/
+        }
         session.put("userName",u.getUserName());//前台通过session.getValue(key);来获取session的值
         session.put("userId",u.getUserId());
         session.put("addUserType",u.getAddUserType());

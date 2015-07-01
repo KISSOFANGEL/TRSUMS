@@ -119,4 +119,5 @@
     <include file="struts-conf/struts-share.xml" />
     <include file="struts-conf/struts-authentication.xml" />
     <include file="struts-conf/struts-behaviorlogs.xml" />    
+    <include file="struts-conf/struts-program.xml" />    
 </struts>    

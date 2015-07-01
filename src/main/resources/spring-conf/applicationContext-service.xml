@@ -70,5 +70,9 @@
 		<property name="systemmessagedao" ref="systemmessageDaoImpl"></property>
 	</bean>
 	
+	<bean id="programServiceImpl" class="com.trsnj.ums.service.impl.ProgramServiceImpl">
+		<property name="programdao" ref="programDaoImpl"></property>
+	</bean>
+	
 	
 </beans>

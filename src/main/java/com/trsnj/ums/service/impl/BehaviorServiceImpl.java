@@ -267,4 +267,6 @@ public class BehaviorServiceImpl implements IBehaviorService
     public void delMyDynamic(String userId, String ids){
         behaviordao.delMyDynamic(userId,ids);
     }
+
+	
 }

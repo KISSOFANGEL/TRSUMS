@@ -51,5 +51,9 @@ public interface IUMSBehaviorLogsDao extends IBaseDao<UMSBehaviorLogs>
      * @see [类、类#方法、类#成员]
      */
     void delMyDynamic(String userId, String ids);
+
+/*	List<UMSBehaviorLogs> getMyprogram(int currpage, int perpage, long userId);
+
+	long getgetMyprogramCount(long userId);*/
     
 }

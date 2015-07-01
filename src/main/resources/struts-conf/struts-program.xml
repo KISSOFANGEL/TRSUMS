@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="programpackage" extends="ajax" namespace="/program">
+       <!--分页获取关注的项目 --> 
+      <action name="getProgramByUserId" class="programAction" method="getProgramByUserId">
+      </action>
+        <!--批量删除关注的项目  --> 
+      <action name="delProgramByIds" class="programAction" method="delProgramByIds">
+      </action>
+         <!--首页热门推荐  --> 
+<!--       <action name="hotRecommendDoc" class="collectAction" method="hotRecommendDoc">
+      </action> -->
+        <!-- wcm文章细览页面判断是否登陆 -->
+        <action name="loginfront" class="programAction" method="loginfront">  
+        </action>
+        <action name="logindaofront" class="ProgramAction" method="logindaofront">  
+        </action>
+ </package>
+</struts>    

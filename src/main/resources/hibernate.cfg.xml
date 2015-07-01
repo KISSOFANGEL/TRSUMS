@@ -46,5 +46,6 @@
 	<mapping class="com.trsnj.ums.pojo.UMSCompanyInfo" />
 	<mapping class="com.trsnj.ums.pojo.UMSShare" />
 	<mapping class="com.trsnj.ums.pojo.UMSChannel" />
+	<mapping class="com.trsnj.ums.pojo.UMSProgram" />
 </session-factory>
 </hibernate-configuration>
